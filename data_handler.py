@@ -27,7 +27,7 @@ test_transform = transforms.Compose([
 ])
 
 
-root_dir = '../input/intel-image-classification/'
+root_dir = 'C:/Users/andre/Documents/dataset/Intel Image Classification'
 # Load the training data
 trainset = datasets.ImageFolder(
     root_dir+'/seg_train/seg_train', transform=train_transform)
