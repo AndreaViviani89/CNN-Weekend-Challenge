@@ -3,9 +3,6 @@ from model_setup import model
 import time
 import argparse
 
-
-import matplotlib.pyplot as plt
-from torchvision import transforms 
 from PIL import Image
 
 
@@ -49,14 +46,3 @@ for img in images:
     time.sleep(3)
 
 
-
-# state_dict = torch.load('model.pth')
-
-# model.load_state_dict(state_dict)
-
-# model_state = state_dict['model_state']
-
-# for i in range(9, -1, -1):
-#      image_path_arg = 'C:/Users/Omistaja/Desktop/New folder/img_' +  str(i) + "_1.jpg"
-#      image_path = image_path_arg
-#      make_predict(image_path, model)
