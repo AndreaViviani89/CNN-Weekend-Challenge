@@ -14,7 +14,7 @@ import numpy as np
 
 
 # Loading model
-state_dict = torch.load('model.pth')
+state_dict = torch.load('model_state.pth')
 
 model.load_state_dict(state_dict)
 
