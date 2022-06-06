@@ -13,44 +13,44 @@ import numpy as np
 
 
 
-# Loading model
-state_dict = torch.load('model_state.pth')
+# # Loading model
+# state_dict = torch.load('model_state.pth')
 
-model.load_state_dict(state_dict)
+# model.load_state_dict(state_dict)
 
 
-# Setting up the CLI
-parser = argparse.ArgumentParser(
-    description='Predict the images in Intel dataset')
+# # Setting up the CLI
+# parser = argparse.ArgumentParser(
+#     description='Predict the images in Intel dataset')
 
-parser.add_argument('file_path', type=str,
-                    help='Path to samples images')
+# parser.add_argument('file_path', type=str,
+#                     help='Path to samples images')
 
-args = parser.parse_args()
+# args = parser.parse_args()
 
-# path_to_images = args.file_path
+# # path_to_images = args.file_path
 
-path_to_images = 'C:/Users/andre/Documents/Strive_repository/CNN-Weekend-Challenge/Test_images'
+# path_to_images = 'C:/Users/andre/Documents/Strive_repository/CNN-Weekend-Challenge/Test_images'
 
-# Loading records
-images = torch.load(path_to_images)
+# # Loading records
+# images = torch.load(path_to_images)
 
-# from int to article names
-class_img = {0: 'buildings',
-                1: 'forest',
-                2: 'glacier',
-                3: 'mountain',
-                4: 'sea',
-                5: 'street'}
+# # from int to article names
+# class_img = {0: 'buildings',
+#                 1: 'forest',
+#                 2: 'glacier',
+#                 3: 'mountain',
+#                 4: 'sea',
+#                 5: 'street'}
 
-# Predictions
-for img in images:
+# # Predictions
+# for img in images:
 
-    pred = torch.argmax(model(img.view(1, -1)), dim=1)
-    print(class_img[pred.item()])
+#     pred = torch.argmax(model(img.view(1, -1)), dim=1)
+#     print(class_img[pred.item()])
 
-    # Break (to simulate readings every 3 secondes)
-    time.sleep(3)
+#     # Break (to simulate readings every 3 secondes)
+#     time.sleep(3)
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -103,3 +103,45 @@ for img in images:
 #     plt.show()
 #     time.sleep(3)
 #     clear_output(wait=True)
+
+
+def make_prediction(model, image, classes):
+
+    transform = transforms.Compose([
+        transforms.Resize((150, 150)),
+        transforms.CenterCrop(124),
+        transforms.ToTensor(),
+        transforms.Normalize(
+            mean=[0.485, 0.456, 0.406],
+            std=[0.229, 0.224, 0.225])
+
+    ])
+
+    image = transform(image).unsqueeze(0)
+
+    model.eval()
+    with torch.no_grad():
+        pred = torch.argmax(model(image), dim=1).item()
+
+    return classes[pred]
+
+
+# Load model
+model.load_state_dict(torch.load('model_state.pth'))
+
+# Load classes for predictions
+classes = torch.load('classes.pth')
+
+# Load image
+img = Image.open('Test_images/17.jpg')
+
+
+print(make_prediction(model, img, classes))
+
+parser = argparse.ArgumentParser(description='Landmark classifier')
+parser.add_argument('Test_images', type=str, help='Input path to test image')
+args = parser.parse_args()
+test_data = args.test_data
+
+image_path = test_data
+make_prediction(image_path, model)

@@ -2,6 +2,7 @@ from PIL import Image
 import torch
 from torchvision import transforms
 from model_setup import model
+import argparse
 
 
 # prediction function
@@ -30,11 +31,19 @@ def make_prediction(model, image, classes):
 # Load model
 model.load_state_dict(torch.load('model_state.pth'))
 
-# # Load classes for predictions
-# classes = torch.load('classes.pth')
+# Load classes for predictions
+classes = torch.load('classes.pth')
 
-# # Load image
-# img = Image.open('Test_images/17.jpg')
+# Load image
+img = Image.open('Test_images/17.jpg')
 
 
-# print(make_prediction(model, img, classes))
+print(make_prediction(model, img, classes))
+
+parser = argparse.ArgumentParser(description='Landmark classifier')
+parser.add_argument('Test_images', type=str, help='Input path to test image')
+args = parser.parse_args()
+test_data = args.test_data
+
+image_path = test_data
+make_prediction(image_path, model)
