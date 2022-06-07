@@ -71,7 +71,7 @@ def predict(model, categories, image):
 
 def load_image():
     uploaded_file = st.file_uploader(
-        label='Pick an image to test', type=["jpg", "png"])
+        label='Pick an image to test', type=["jpg", "png", "jpeg"])
     if uploaded_file is not None:
         image_data = uploaded_file.getvalue()
         st.image(image_data, caption="Input Image", width=1000)
