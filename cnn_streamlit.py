@@ -25,8 +25,7 @@ def load_model():
     outputs = 6
 
     model.fc = torch.nn.Linear(inputs, outputs)
-    model.load_state_dict(torch.load(
-        'model.pth'))
+    model.load_state_dict(torch.load( 'model.pth'))
 
     return model
 
@@ -204,8 +203,7 @@ elif app_mode == 'Classifier':
     # get image file names
         image_names = os.listdir(origin_folder)
     # print(image_names)
-        classes = torch.load(
-            'classes.pth')
+        classes = torch.load('classes.pth')
         model = load_model()
 
         for name in image_names:
